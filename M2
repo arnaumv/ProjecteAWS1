@@ -1,1 +1,1 @@
-
+Para comenzar os mostraremos nuestro modelo Entidad/Relación. 
