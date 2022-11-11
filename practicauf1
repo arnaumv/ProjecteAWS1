@@ -1,0 +1,407 @@
+dict_articulos = {4: {"nombre": "ASUS TUF GeForce RTX", "stock": 6, "precio": 1400},
+2: {"nombre": "ASUS DUAL Radeon RX6600", "stock": 12, "precio": 294},
+3: {"nombre": "Intel Core i7-13700K", "stock": 9, "precio": 530},
+1: {"nombre": "Kingston Fury Beast 32GB", "stock": 10, "precio": 180},
+10: {"nombre": "Corsair DC Cable Pro Kit", "stock": 20, "precio": 110},
+11: {"nombre": "Gigabyte GC-TITAN RIDGE 2.0", "stock": 15, "precio": 81},
+}
+dict_compras = {"AA32E": {"fecha": 20201101, "articulos":{3:1,4:1}},
+"AB37Z": {"fecha": 20201101, "articulos":{1:1,4:1}},
+"CF13U": {"fecha": 20201101, "articulos":{1:1,3:1}},
+"KL11T": {"fecha": 20201101, "articulos":{1:3,3:2,4:2}},
+"ST234": {"fecha": 20191207, "articulos":{1:1,3:1,4:1}},
+"NL345": {"fecha": 20181207, "articulos":{1:1,2:1,3:1}},
+"SG345": {"fecha": 20190407, "articulos":{1:1,2:1,3:1,4:3}},
+"SU798": {"fecha": 20210107, "articulos":{2:2,10:3,11:1}}
+}
+dict_clientes = {"34343434H": {"nombre": "Pedro", "telefono": "666994455"},
+"78787878K": {"nombre": "Luis", "telefono": "666765432"},
+"39292939S": {"nombre": "Jose Luis", "telefono": "666232211"},
+"53423454C": {"nombre": "Lorenzo Lamas", "telefono": "666987578"},
+"87654334T": {"nombre": "Arnau Soler", "telefono": "555443322"}
+}
+cliente_compra = {"34343434H": ["AA32E", "AB37Z","SG345"], "78787878K": ["CF13U", "KL11T"], "39292939S": ["ST234"],
+"53423454C": ["NL345"], "87654334T":["SU798"] }
+compra_cliente = {"AA32E": "34343434H", "AB37Z": "34343434H", "CF13U": "78787878K", "KL11T": "78787878K",
+"ST234": "39292939S", "NL345": "53423454C","SG345" : "34343434H","SU798":"87654334T"}
+
+letrasDni= ["T","R","W","A","G","M","Y","F","P","D","X","B","N","J","Z","S","Q","V","H","L","C","K","E"]
+
+dic_customers = []
+
+menu00 = "\n"+"*"*10+"MENU 0 "+"*"*10+"\n"+"1)Items\n2)Purchases 2\n3)Customers \n4)Salir\n"
+menu01 = "\n"+"*"*10+"Items"+"*"*10+"\n"+"1)New Item 1\n2) Modify Item \n3) Find Items\n4)List Items\n5)Go Back"
+menu02 = "\n"+"*"*10+"MENU 2"+"*"*10+"\n"+"1)Opcion 1\n2)Opcion 2\n3)Back"
+menu022 =  "\n"+"*"*10+"MENU 2.2"+"*"*10+"\n"+"1)Opcion 1\n2)Opcion 2\n3)Opcion 3\n3) Back"
+menu03 = "\n"+"*"*10+"Customers"+"*"*10+"\n"+"1)New Customer\n2)Find Customer\n3)Go Back\n"
+menu012 = "\n"+"*"*10+"Modify Item"+"*"*10+"\n"+"1)Name\n2)Stock\n3)Price\n4)Show Item\n5)Main Menu\n6)Go Back"
+menu013 = "\n"+"*"*10+"Find Items"+"*"*10+"\n"+"1)By ID\n2)By Name\n3)Main Menu\n4)Go back "
+menu014 = "\n"+"*"*10+"List Items"+"*"*10+"\n"+"1)List by ID\n2)List by Name\n3)By Stock\n4)List 3 best selling items\n5)3 least sold items\n6)Main Menu\n7)Go Back"
+menu032 = "\n"+"*"*10+"Find Customers"+"*"*10+"\n"+"1)Find By NIF\n2)Fin by name\n3)Find top 3 highest spending customers\n4)Main Menu\n5)Go Back"
+
+menu_actual = 0 # valores posibles: 0, 1, 2, 11, 12, 111, 112 ... El valor -1 indica terminar.
+
+while menu_actual >= 0:
+
+    while menu_actual == 0:
+    # Obtener opción correcta
+        opcion_ok = False
+        while not opcion_ok:
+            print(menu00)
+            opc = input(">Opcion: ")
+            if not opc.isdigit():
+                print("La opcion ha de ser numérica")
+                input("Pulse una tecla para continuar...\n")
+            else:
+                opc = int(opc)
+                if opc > 4 or opc < 0:
+                    print("La opción ha de estar entre 1 y 3")
+                    input("Pulse una tecla para continuar...\n")
+                else:
+                    opcion_ok = True
+        # Tratar opción
+        if opc == 1:
+            menu_actual = 1
+        elif opc == 2:
+            menu_actual = 2
+        elif opc == 3: #podria ser solo 'else'
+            menu_actual = 3
+        elif opc == 4:
+            menu_actual = -1
+
+    while menu_actual == 1:
+        print(menu01)
+        opc = input(">Opcion: ")
+        # Validar que la opción sea correcta
+        if not opc.isdigit():
+            print("La opcion ha de ser numérica")
+            input("Pulse una tecla para continuar...\n")
+        else:
+            opc = int(opc)
+            if opc > 6 or opc < 0:
+                print("La opción ha de estar entre 1 y 5")
+                input("Pulse una tecla para continuar...\n")
+            else:
+                if opc == 1:
+                    menu_actual = 11
+                elif opc == 2:
+                    menu_actual = 12
+                elif opc == 3:
+                    menu_actual = 13
+                elif opc == 4:
+                    menu_actual = 14
+                elif opc == 5:
+                    menu_actual = -1
+
+    while menu_actual == 2:
+        print(menu02)
+        opc = input(">Opcion: ")
+        # Validación alternativa del valor introducido:
+        # Funciona bien porque, normalmente, al evaluar un OR
+        # la 2a condición solo se evalúa si la primera es falsa
+        # (Si la primera es cierta ya se sabe que el OR es cierto y no se sigue evaluando)
+        # Inconveniente: el mensaje no distingue no numérico de valor fuera de rango.
+        if not opc.isdigit() or int(opc) not in range(1,4):
+            print("== Opcion Incorrecta!!! ===")
+        else:
+            opc = int(opc)
+            if opc == 1:
+                menu_actual = 21
+            elif opc == 2:
+                menu_actual = 22
+            elif opc == 3:
+                menu_actual = 0
+
+    while menu_actual == 3:
+        print(menu03)
+        opc = input(">Opcion: ")
+        # Validación alternativa del valor introducido:
+        # Funciona bien porque, normalmente, al evaluar un OR
+        # la 2a condición solo se evalúa si la primera es falsa
+        # (Si la primera es cierta ya se sabe que el OR es cierto y no se sigue evaluando)
+        # Inconveniente: el mensaje no distingue no numérico de valor fuera de rango.
+        if not opc.isdigit() or int(opc) not in range(1,5):
+            print("== Opcion Incorrecta!!! ===")
+        else:
+            opc = int(opc)
+            if opc == 1:
+                menu_actual = 31
+            elif opc == 2:
+                menu_actual = 32
+            elif opc == 3:
+                menu_actual = 33
+            elif opc == 4:
+                menu_actual = 0
+
+
+    while menu_actual == 11:
+        while True:
+            id = input("Id del Item: ")
+            if not id.isdigit() or int(id) < 0 :
+                print("El ID ha de ser un numero i positiu ")
+            if max(dict_articulos) == int(id):
+                print("Ha de ser major que ",max(dict_articulos))
+            else:
+                print("EL ID es correcte")
+
+            name = input("Name: ")
+            if name == ' ':
+                print("Has d'introduir un nom")
+            else:
+                print("S'ha guardat el nom")
+
+            price = input("Preu: ")
+            if not price.isdigit() or int(price) < 0:
+                print("El preu ha de ser un numero valid")
+            else:
+                print("S'ha guardat correctament")
+            stock = input("Stock: ")
+            if not price.isdigit() or  int(price) < 0:
+                print("Ha de ser un numero valid")
+            else:
+                print("Es correcte")
+                break
+        newitem = (id,name,stock,price)
+        dict_articulos.append(newitem)
+        #dict_articulos = newitem
+        print(dict_articulos)
+        #dict_characters[int(opcid)]["name"] = nombre
+
+        menu_actual = 1
+
+    while menu_actual == 12:     ##### MODIFICAR ITEMS ####
+        print("==== Selecciona un articulo para editar ====")
+        # for i in dict_articulos:
+        #     print("ID", i, end=", ")
+        #     for x, y in dict_articulos[i].items():
+        #         if x == "nombre":
+        #             print("nombre: ", end=" ")
+        #             for j in dict_articulos[i]["nombre"]:
+        #                 print(dict_articulos[j]["nombre"], end=", ")
+        #         elif x != "nombre" and x != "stock":
+        #             print(x, ": ",y, end=", ")
+        #         elif x == "stock":
+        #             print(x, ": ",y, end=" ")
+        #     print("")
+        opcid = input("Id to edit")
+        print(menu012)
+        opc = input(">Opcion: ")
+        if not opc.isdigit() or int(opc) not in range(1, 7):
+            print("== Opcion Incorrecta!!! ===")
+        else:
+            opc = int(opc)
+            if opc == 1:
+                print("Opcion 1.2.1")
+
+                menu_actual = 12
+            elif opc == 2:
+                menu_actual = 12
+                print("Opcion 1.2.2")
+
+            elif opc == 3:
+                menu_actual = 12
+                print("Opcion 1.2.3")
+
+            elif opc == 4:
+                menu_actual = 12
+                print("Opcion 1.2.4")
+            elif opc == 5:
+                print("Opcion 1.2.5")
+            elif opc == 6:
+                menu_actual = 1
+
+    while menu_actual == 13:
+        print(menu013)
+        opc = input(">Opcion: ")
+        if not opc.isdigit() or int(opc) not in range(1, 5):
+            print("== Opcion Incorrecta!!! ===")
+        else:
+            opc = int(opc)
+            if opc == 1:
+                print("Buscar por ID")         #### BUSCAR POR ID #####
+                id = int(input("Id a buscar: "))
+                cadena = "\nId".ljust(10) + "Name".ljust(30) + "Stock".ljust(20) + "Price".ljust(5) + "\n" + "*" * 90 + "\n"
+                dic_id = []
+                for u in dict_articulos:
+                    dic_id.append(u)
+
+                for u in dic_id:
+                    if u == id:
+                        cadena = cadena + str(u).ljust(9) + dict_articulos[u]["nombre"].ljust(30) + str(
+                            dict_articulos[u]["stock"]).ljust(20) + str(dict_articulos[u]["precio"]).ljust(5) + "\n" + "*" * 90 + "\n"
+                print(cadena)
+                input("Press any key to continue")
+
+                menu_actual = 13
+            elif opc == 2:
+                print("==== Buscar por nombre ====\n")      ##### BUSCAR POR NOMBRE ####
+                str = "Id".ljust(25) + "Nombre".ljust(15) + "Stock".ljust(30) + "Precio".ljust(
+                    20) + "\n" + "*" * 90 + "\n"
+
+                nombre = input("Nombre a buscar:\n")
+
+                cadena = "\nId".ljust(10) + "Name".ljust(30) + "Stock".ljust(20) + "Price".ljust(5) + "\n" + "*" * 90 + "\n"
+                dic_nombre = []
+                for i in dict_articulos:
+                    print(i)
+                    if nombre in dict_articulos[i]["nombre"]:
+                        print(nombre)
+
+
+
+                #     cadena = cadena + str(i).ljust(9) + dict_articulos[i]["nombre"].ljust(30) + str(
+                #             dict_articulos[i]["stock"]).ljust(20) + str(dict_articulos[i]["precio"]).ljust(
+                #             5) + "\n" + "*" * 90 + "\n"
+                # print(cadena)
+
+                # dic_nombre = []
+                # for u in dict_articulos:
+                #     dic_nombre.append(dict_articulos[u]["nombre"])
+                #     if nombre in dic_nombre:
+                #         print(dict_articulos.items())
+
+                #     if nombre in u[1]:
+                #         str = str + u[0].ljust(25) + u[1].ljust(15) + \
+                #               u[2].ljust(30) + u[3].ljust(20) + "\n"
+                # print(str)
+                menu_actual = 13
+
+
+            elif opc == 3:
+                menu_actual = 13
+                print("Opcion 1.3.3")
+
+            elif opc == 4:
+                menu_actual = 1
+
+    while menu_actual == 14:   #### menu 1.4 ###
+        print(menu014)
+        opc = input(">Opcion: ")
+        if not opc.isdigit() or int(opc) not in range(1, 8):
+            print("== Opcion Incorrecta!!! ===")
+        else:
+            opc = int(opc)
+            if opc == 1:     ##### LISTAR POR ID ####
+                print("List by ID")
+                cadena = "Id".ljust(25) + "nombre".ljust(30) + "Stock".ljust(10) + "Price".ljust(
+                    15) + "\n" + "*" * 90 + "\n"
+                listaordenar_id = list(dict_articulos.keys())
+
+                for i in range(len(listaordenar_id) - 1):
+                    for j in range(len(listaordenar_id) - 1 - i):
+                        dict_articulos[listaordenar_id[j]]
+                        if listaordenar_id[j] > listaordenar_id[j + 1]:
+                            aux = listaordenar_id[j]
+                            listaordenar_id[j] = listaordenar_id[j + 1]
+                            listaordenar_id[j + 1] = aux
+
+                for id in listaordenar_id:
+                    cadena = cadena + str(id).ljust(25) + dict_articulos[id]["nombre"].ljust(
+                        30) + str(dict_articulos[id]["stock"]).ljust(10) + \
+                             str(dict_articulos[id]["precio"]).ljust(15)  + "\n"
+
+                print(cadena)
+                input()
+                break
+                #menu_actual = 14
+            elif opc == 2:    #### LITAR POR NOMBRE ####
+
+                print("List by Name")
+
+                cadena = "Id".ljust(25) + "Name".ljust(25) + "stock".ljust(15) + "precio".ljust(
+                    15) +  "\n" + "*" * 90 + "\n"
+                listaordenar_name = list(dict_articulos.keys())
+
+                for i in range(len(listaordenar_name) - 1):
+                    for j in range(len(listaordenar_name) - 1 - i):
+                        dict_articulos[listaordenar_name[j]]["nombre"]
+                        if dict_articulos[listaordenar_name[j]]["nombre"].upper() > \
+                                dict_articulos[listaordenar_name[j + 1]][
+                                    "nombre"].upper():
+                            aux = listaordenar_name[j]
+                            listaordenar_name[j] = listaordenar_name[j + 1]
+                            listaordenar_name[j + 1] = aux
+
+                for id in listaordenar_name:
+                    cadena = cadena + str(id).ljust(25) + dict_articulos[id]["nombre"].ljust(
+                        30) + str(dict_articulos[id]["stock"]).ljust(10) + \
+                             str(dict_articulos[id]["precio"]).ljust(15)  + "\n"
+
+                print(cadena)
+                input("press any key to continue")
+                break
+
+
+
+            elif opc == 3:    #### LISTAR POR STOCK  ###
+                #menu_actual = 14
+                print("Order by STOCK")
+                cadena = "Id".ljust(25) + "Name".ljust(25) + "stock".ljust(15) + "precio".ljust(
+                    15) + "\n" + "*" * 90 + "\n"
+                listaordenar_stock = list(dict_articulos.keys())
+
+                for i in range(len(listaordenar_stock) - 1):
+                    for j in range(len(listaordenar_stock) - 1 - i):
+                        dict_articulos[listaordenar_stock[j]]["stock"]
+                        if dict_articulos[listaordenar_stock[j]]["stock"] > \
+                                dict_articulos[listaordenar_stock[j + 1]]["stock"]:
+                            aux = listaordenar_stock[j]
+                            listaordenar_stock[j] = listaordenar_stock[j + 1]
+                            listaordenar_stock[j + 1] = aux
+
+                for id in listaordenar_stock:
+                    cadena = cadena + str(id).ljust(25) + dict_articulos[id]["nombre"].ljust(
+                        30) + str(dict_articulos[id]["stock"]).ljust(10) + \
+                             str(dict_articulos[id]["precio"]).ljust(15)  + "\n"
+
+                print(cadena)
+                break
+
+            elif opc == 4:
+                menu_actual = 14
+                print("Opcion 1.4.4")
+            elif opc == 5:
+                print("Opcion 1.4.5")
+            elif opc == 6:
+                menu_actual = 14
+            elif opc == 7:
+                menu_actual = 1
+
+    while menu_actual == 31:  ####3 new cutomer #####
+        name = input("Name: ")
+        if not name.isalpha() or name == ' ':
+            print("Escribe unn nombre correcto")
+        else:
+            print("Es correcte")
+        while True:
+            dni = input("Dni del cliente\n")
+            if not dni[0:8].isdigit():
+                print("Formato DNI invalido")
+            elif not letrasDni[int(dni[0:8]) % 23] == dni[8].upper():
+                print("La letra del dni es incorrecto")
+            else:
+                print("El dni es correcto")
+                break
+        while True:
+            tlf = input("Telefono del cliente: \n")
+            if not len(tlf) == 9 or not  tlf[1:9].isdigit():
+                print("El telefono es invalido")
+            else:
+                print("Es correcto")
+                input("Pres any key to continue")
+                break
+        new_customer = (dni,name,tlf)
+        print("Do you want to save the new customer ? Y/y :")
+        answer = input("Anwer--> ")
+        if answer == "Y" or answer == "y":
+            dic_customers.append(new_customer)
+            for i in dic_customers:
+                str = "NIF".ljust(10) + (dni) + "\n" + "NAME".ljust(10) + (name) + "\n" + "TLF".ljust(10) + (tlf)
+                print(str)
+                input()
+        else:
+            break
+        menu_actual = 3
+
+    while menu_actual == 32:  #### Find cutomer #####
+        print(menu032)
